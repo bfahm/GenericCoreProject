@@ -1,7 +1,6 @@
-# Personal Safety Backend
+# Generic .Net Core Project
 
 ### Setup Guide
-This guide assumes that all required NuGET packages are already installed.
 
 1. Make sure SQL Server is set up and ready for new databases
 2. Copy the `ServerName` that appear when trying to connect the SQLServer at its launch
@@ -23,22 +22,3 @@ This guide assumes that all required NuGET packages are already installed.
 - `Microsoft.VisualStudio.Web.CodeGeneration.Design`- Version **3.1.1**
 - `NLog.Web.AspNetCore` - Version **4.9.0**
 - `Swashbuckle.AspNetCore` - Version **5.0.0**
-
-### Try these routes
-
-- `localhost:[yourPortNumber]/api/Main/Index`
-- `localhost:[yourPortNumber]/api/Main/TestRepository`
-
-> This should return an Id and the word "test", the Id should increment at every page reload.
-
-- `localhost:[yourPortNumber]/api/Main/TestRepositoryWithId/1`
-
-> This should return an Id and the word "test", the Id should be the one provided in the requested URL.
-
-- `localhost:[yourPortNumber]/api/Main/TestRepositoryWithId2?Id=1&Additional=2`
-
-> This should return an Id, the Id should be the one provided in the requested URL, the parameter "Additional" is printed too.
-
-- `localhost:[yourPortNumber]/api/Main/TestJson`
-
-> This returns the full test object formatted in a JSON style.
