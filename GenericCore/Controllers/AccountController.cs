@@ -13,17 +13,17 @@ namespace GenericCore.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
-        private readonly IAccountBusiness _identityService;
+        private readonly AccountService _accountService;
 
-        public AccountController(IAccountBusiness identityService)
+        public AccountController(AccountService accountService)
         {
-            _identityService = identityService;
+            _accountService = accountService;
         }
 
         [HttpPost]
         public async Task<IActionResult> Register([FromBody] RegistrationRequestViewModel request)
         {
-            var authResponse = await _identityService.RegisterAsync(request);
+            var authResponse = await _accountService.RegisterAsync(request);
 
             if (authResponse.HasErrors)
             {
@@ -36,7 +36,7 @@ namespace GenericCore.Controllers
         [HttpPost]
         public async Task<IActionResult> Login([FromBody] LoginRequestViewModel request)
         {
-            var authResponse = await _identityService.LoginAsync(request);
+            var authResponse = await _accountService.LoginAsync(request);
 
             if (authResponse.HasErrors)
             {

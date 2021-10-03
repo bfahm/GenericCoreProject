@@ -51,7 +51,7 @@ namespace GenericCore
             // Required for API functionality
             services.AddControllers();
 
-            services.AddScoped<IAccountBusiness, AccountBusiness>();
+            services.AddScoped<AccountService>();
 
             // Add authentication middleware and set its parameters
             services.AddAuthentication(auth =>

@@ -14,12 +14,12 @@ using Microsoft.Extensions.Options;
 
 namespace GenericCore.Services
 {
-    public class AccountBusiness : IAccountBusiness
+    public class AccountService
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly AppSettings _appSettings;
 
-        public AccountBusiness(IOptions<AppSettings> appSettings, UserManager<ApplicationUser> userManager)
+        public AccountService(IOptions<AppSettings> appSettings, UserManager<ApplicationUser> userManager)
         {
             _userManager = userManager;
             _appSettings = appSettings.Value;
