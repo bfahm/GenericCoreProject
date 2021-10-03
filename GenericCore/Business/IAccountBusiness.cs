@@ -1,4 +1,4 @@
-﻿using GenericCore.Helpers;
+﻿using GenericCore.ViewModels;
 using GenericCore.ViewModels.Account;
 using System;
 using System.Collections.Generic;

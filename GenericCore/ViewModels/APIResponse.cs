@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace GenericCore.Helpers
+namespace GenericCore.ViewModels
 {
     public class APIResponse<T>
     {

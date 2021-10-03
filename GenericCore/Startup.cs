@@ -16,7 +16,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using GenericCore.Extensions;
 using GenericCore.Models;
-using GenericCore.Helpers;
 using GenericCore.Services;
 using Microsoft.OpenApi.Models;
 using GenericCore.Persistance.DbContexts;
@@ -35,8 +34,15 @@ namespace GenericCore
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Setting up app settings
+            services.Configure<AppSettings>(Configuration);
+            var appSettings = Configuration.Get<AppSettings>();
+
             // Setup the connextion string to be used by AppDbContext
-            services.AddDbContextPool<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("ConnectionString")));
+            services.AddDbContextPool<AppDbContext>(options =>
+            {
+                options.UseSqlServer(appSettings.SQLServerConnectionString);
+            });
 
             // Setup ASP Identity to use the database
             services.AddIdentity<ApplicationUser, IdentityRole>()
@@ -44,11 +50,6 @@ namespace GenericCore
 
             // Required for API functionality
             services.AddControllers();
-
-            // Setting up basic JWT settings
-            JwtSettings jwtSettings = new JwtSettings();
-            Configuration.Bind(nameof(jwtSettings), jwtSettings);
-            services.AddSingleton(jwtSettings);
 
             services.AddScoped<IAccountBusiness, AccountBusiness>();
 
@@ -64,7 +65,7 @@ namespace GenericCore
                     auth.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtSettings.Secret)),
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(appSettings.JWTSettings.Secret)),
                         ValidateIssuer = false,
                         ValidateAudience = false,
                         RequireExpirationTime = false,

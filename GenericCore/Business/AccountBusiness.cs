@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
-using GenericCore.Helpers;
 using GenericCore.Models;
 using System;
 using System.Collections.Generic;
@@ -10,18 +9,20 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using GenericCore.ViewModels.Account;
+using GenericCore.ViewModels;
+using Microsoft.Extensions.Options;
 
 namespace GenericCore.Services
 {
     public class AccountBusiness : IAccountBusiness
     {
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly JwtSettings _jwtSettings;
+        private readonly AppSettings _appSettings;
 
-        public AccountBusiness(UserManager<ApplicationUser> userManager, JwtSettings jwtSettings)
+        public AccountBusiness(IOptions<AppSettings> appSettings, UserManager<ApplicationUser> userManager)
         {
             _userManager = userManager;
-            _jwtSettings = jwtSettings;
+            _appSettings = appSettings.Value;
         }
 
         public async Task<APIResponse<string>> LoginAsync(LoginRequestViewModel request)
@@ -93,7 +94,7 @@ namespace GenericCore.Services
         private string GenerateAuthenticationResult(ApplicationUser user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_jwtSettings.Secret);
+            var key = Encoding.ASCII.GetBytes(_appSettings.JWTSettings.Secret);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 // Things to be included and encoded in the token
@@ -105,8 +106,8 @@ namespace GenericCore.Services
                     new Claim("id", user.Id)
                 }),
                 // Token will expire 2 hours from which it was created
-                Expires = DateTime.UtcNow.AddHours(2),
-                //
+                Expires = DateTime.UtcNow.AddHours(_appSettings.JWTSettings.ExpireAfterHours),
+                // JWT Signing
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
 
