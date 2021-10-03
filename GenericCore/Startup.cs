@@ -19,6 +19,7 @@ using GenericCore.Models;
 using GenericCore.Helpers;
 using GenericCore.Services;
 using Microsoft.OpenApi.Models;
+using GenericCore.Persistance.DbContexts;
 
 namespace GenericCore
 {

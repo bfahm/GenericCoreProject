@@ -4,8 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using GenericCore.Models.ViewModels;
 using GenericCore.Services;
+using GenericCore.ViewModels.Account;
 
 namespace GenericCore.Controllers
 {

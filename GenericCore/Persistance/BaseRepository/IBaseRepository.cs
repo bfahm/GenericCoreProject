@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace GenericCore.Models
+namespace GenericCore.Persistance.BaseRepository
 {
     public interface IBaseRepository<T>
     {

@@ -1,11 +1,12 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using GenericCore.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace GenericCore.Models
+namespace GenericCore.Persistance.DbContexts
 {
     public class AppDbContext : IdentityDbContext<ApplicationUser>
     {
@@ -21,6 +22,6 @@ namespace GenericCore.Models
             base.OnModelCreating(builder); // Call base class original function that we're overriding to prevent errors
         }
 
-        public DbSet<ApplicationUser> UserInfos { get; set; }
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
     }
 }

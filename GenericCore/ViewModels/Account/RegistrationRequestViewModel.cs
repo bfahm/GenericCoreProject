@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace GenericCore.Models.ViewModels
+namespace GenericCore.ViewModels.Account
 {
     public class RegistrationRequestViewModel
     {
@@ -19,10 +19,6 @@ namespace GenericCore.Models.ViewModels
         [Required]
         [DataType(DataType.Password)]
         public string Password { get; set; }
-
-        [RegularExpression(@"^[0-9]{14}$", ErrorMessage = "National ID is invalid")]
-        [Required]
-        public string NationalId { get; set; }
 
         [RegularExpression(@"^[0-9]{11}$", ErrorMessage = "Phone number is invalid")]
         [Required]

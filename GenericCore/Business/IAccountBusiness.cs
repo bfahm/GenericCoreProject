@@ -1,5 +1,5 @@
 ﻿using GenericCore.Helpers;
-using GenericCore.Models.ViewModels;
+using GenericCore.ViewModels.Account;
 using System;
 using System.Collections.Generic;
 using System.Linq;

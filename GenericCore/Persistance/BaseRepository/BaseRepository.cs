@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using GenericCore.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GenericCore.Persistance.DbContexts;
 
-namespace GenericCore.Models
+namespace GenericCore.Persistance.BaseRepository
 {
     public class BaseRepository<T> : IBaseRepository<T> where T : class
     {
@@ -25,7 +25,7 @@ namespace GenericCore.Models
 
         public IEnumerable<T> GetAll()
         {
-            return context.Set<T>().AsNoTracking().AsEnumerable<T>();
+            return context.Set<T>().AsNoTracking().AsEnumerable();
         }
 
         public void Remove(int id)

@@ -2,7 +2,6 @@
 using Microsoft.IdentityModel.Tokens;
 using GenericCore.Helpers;
 using GenericCore.Models;
-using GenericCore.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -10,6 +9,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using GenericCore.ViewModels.Account;
 
 namespace GenericCore.Services
 {
@@ -61,13 +61,6 @@ namespace GenericCore.Services
                 return response;
             }
 
-            ApplicationUser exsistingUserFoundByNationalId = _userManager.Users.Where(u => u.NationalId == request.NationalId).FirstOrDefault();
-            if (exsistingUserFoundByNationalId != null)
-            {
-                response.Messages.Add("User with this National Id was registered before.");
-                return response;
-            }
-
             ApplicationUser exsistingUserFoundByPhoneNumber = _userManager.Users.Where(u => u.PhoneNumber == request.PhoneNumber).FirstOrDefault();
             if (exsistingUserFoundByPhoneNumber != null)
             {
@@ -80,7 +73,6 @@ namespace GenericCore.Services
                 Email = request.Email,
                 UserName = request.Email,
                 FullName = request.FullName,
-                NationalId = request.NationalId,
                 PhoneNumber = request.PhoneNumber
             };
 
