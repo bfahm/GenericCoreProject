@@ -9,7 +9,7 @@ namespace GenericCore.Core
         public static IServiceCollection AddAutomapper(this IServiceCollection services)
         {
             var serviceProvider = services.BuildServiceProvider();
-            
+
             //services.AddScoped<MapperDependency>();
 
             services.AddAutoMapper(cfg =>

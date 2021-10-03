@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using GenericCore.Services;
+﻿using GenericCore.Services;
 using GenericCore.ViewModels.Requests.Account;
 using GenericCore.ViewModels.Wrappers;
+using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace GenericCore.Controllers
 {

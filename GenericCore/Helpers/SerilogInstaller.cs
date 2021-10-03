@@ -17,7 +17,7 @@ namespace GenericCore.Helpers
         public static Logger CreateLogger(AppSettings appSettings)
         {
             _appSettings = appSettings;
-            
+
             ConfigureExeclusions();
             ConfigureEmailLogging("Generic App Exception");
             ConfigureFileLogging("generic_app");
@@ -66,7 +66,7 @@ namespace GenericCore.Helpers
                         EnableSsl = false,
                         Port = _appSettings.LoggingSMTPConfiguration.Port,
                         EmailSubject = emailSubject
-                    }, 
+                    },
                     restrictedToMinimumLevel: LogEventLevel.Error, batchPostingLimit: 5
                 );
             }

@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using GenericCore.ViewModels.Wrappers;
 using Microsoft.AspNetCore.Mvc;
-using GenericCore.ViewModels;
-using GenericCore.ViewModels.Wrappers;
 
 namespace GenericCore.Controllers
 {
@@ -33,7 +27,7 @@ namespace GenericCore.Controllers
                     response.ErrorMessage = "That didn't work, please have another go.";
                     break;
             }
-            
+
             return response;
         }
     }

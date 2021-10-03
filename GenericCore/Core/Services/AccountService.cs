@@ -1,21 +1,19 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.IdentityModel.Tokens;
+﻿using AutoMapper;
+using GenericCore.Constants;
 using GenericCore.Models;
+using GenericCore.Models.Exceptions;
+using GenericCore.ViewModels.Requests.Account;
+using GenericCore.ViewModels.Responses.Account;
+using GenericCore.ViewModels.Wrappers;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using GenericCore.ViewModels;
-using Microsoft.Extensions.Options;
-using GenericCore.ViewModels.Requests.Account;
-using AutoMapper;
-using GenericCore.ViewModels.Responses.Account;
-using GenericCore.Models.Exceptions;
-using GenericCore.Constants;
-using GenericCore.ViewModels.Wrappers;
 
 namespace GenericCore.Services
 {
@@ -49,7 +47,7 @@ namespace GenericCore.Services
         public async Task<APIResponse> RegisterAsync(RegistrationRequest request)
         {
             ApplicationUser exsistingUserFoundByEmail = await _userManager.FindByEmailAsync(request.Email);
-            if(exsistingUserFoundByEmail != null)
+            if (exsistingUserFoundByEmail != null)
                 throw new BusinessException(ErrorCodes.ExsitingEmail);
 
             ApplicationUser exsistingUserFoundByPhoneNumber = _userManager.Users.Where(u => u.PhoneNumber == request.PhoneNumber).FirstOrDefault();

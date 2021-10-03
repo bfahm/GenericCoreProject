@@ -1,9 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
+﻿using GenericCore.Persistance.DbContexts;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using GenericCore.Persistance.DbContexts;
 
 namespace GenericCore.Persistance.BaseRepository
 {

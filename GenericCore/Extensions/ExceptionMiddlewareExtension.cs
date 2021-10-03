@@ -1,13 +1,9 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using GenericCore.ViewModels.Wrappers;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using GenericCore.ViewModels;
-using GenericCore.ViewModels.Wrappers;
+using System.Collections.Generic;
+using System.Net;
 
 namespace GenericCore.Extensions
 {
@@ -23,7 +19,7 @@ namespace GenericCore.Extensions
                     context.Response.ContentType = "application/json";
 
                     var contextFeature = context.Features.Get<IExceptionHandlerFeature>();
-                    if (contextFeature != null) 
+                    if (contextFeature != null)
                     {
                         await context.Response.WriteAsync(new APIResponse
                         {

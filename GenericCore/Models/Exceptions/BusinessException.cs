@@ -11,7 +11,7 @@ namespace GenericCore.Models.Exceptions
         public HttpStatusCode HttpStatusCode { get; set; }
 
         public readonly List<string> Errors = new List<string>();
-        
+
         public BusinessException(ErrorCodes errorCode) : base(errorCode.ToMessage())
         {
             HttpStatusCode = HttpStatusCode.BadRequest;
