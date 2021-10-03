@@ -7,6 +7,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using GenericCore.ViewModels;
+using GenericCore.ViewModels.Wrappers;
 
 namespace GenericCore.Extensions
 {
@@ -24,12 +25,11 @@ namespace GenericCore.Extensions
                     var contextFeature = context.Features.Get<IExceptionHandlerFeature>();
                     if (contextFeature != null) 
                     {
-                        await context.Response.WriteAsync(new APIResponse<string>
+                        await context.Response.WriteAsync(new APIResponse
                         {
-                            Result = null,
-                            Status = context.Response.StatusCode,
-                            HasErrors = true,
-                            Messages = new List<string> { contextFeature.Error.Message },
+                            ErrorCode = context.Response.StatusCode,
+                            Status = true,
+                            Errors = new List<string> { contextFeature.Error.Message },
                         }.ToString()); ;
                     }
                 });

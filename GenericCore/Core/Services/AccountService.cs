@@ -8,66 +8,53 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using GenericCore.ViewModels.Account;
 using GenericCore.ViewModels;
 using Microsoft.Extensions.Options;
+using GenericCore.ViewModels.Requests.Account;
+using AutoMapper;
+using GenericCore.ViewModels.Responses.Account;
+using GenericCore.Models.Exceptions;
+using GenericCore.Constants;
+using GenericCore.ViewModels.Wrappers;
 
 namespace GenericCore.Services
 {
     public class AccountService
     {
-        private readonly UserManager<ApplicationUser> _userManager;
         private readonly AppSettings _appSettings;
+        private readonly IMapper _mapper;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public AccountService(IOptions<AppSettings> appSettings, UserManager<ApplicationUser> userManager)
+        public AccountService(IOptions<AppSettings> appSettings, IMapper mapper, UserManager<ApplicationUser> userManager)
         {
-            _userManager = userManager;
             _appSettings = appSettings.Value;
+            _mapper = mapper;
+            _userManager = userManager;
         }
 
-        public async Task<APIResponse<string>> LoginAsync(LoginRequestViewModel request)
+        public async Task<string> LoginAsync(LoginRequest request)
         {
-            APIResponse<string> response = new APIResponse<string>();
-
             ApplicationUser user = await _userManager.FindByEmailAsync(request.Email);
             if (user == null)
-            {
-                response.Messages.Add("User with provided email does not exsist.");
-                return response;
-            }
-
+                throw new BusinessException(ErrorCodes.EmailNotFound);
 
             bool userHasValidPassowrd = await _userManager.CheckPasswordAsync(user, request.Password);
 
             if (!userHasValidPassowrd)
-            {
-                response.Messages.Add("User/Password combination is wrong.");
-                return response;
-            }
+                throw new BusinessException(ErrorCodes.IncorrectEmailPasswordCombination);
 
-            response.Result = GenerateAuthenticationResult(user);
-            response.HasErrors = false;
-
-            return response;
+            return GenerateAuthenticationResult(user);
         }
 
-        public async Task<APIResponse<string>> RegisterAsync(RegistrationRequestViewModel request)
+        public async Task<APIResponse> RegisterAsync(RegistrationRequest request)
         {
-            APIResponse<string> response = new APIResponse<string>();
-
             ApplicationUser exsistingUserFoundByEmail = await _userManager.FindByEmailAsync(request.Email);
             if(exsistingUserFoundByEmail != null)
-            {
-                response.Messages.Add("User with this email address already exsists.");
-                return response;
-            }
+                throw new BusinessException(ErrorCodes.ExsitingEmail);
 
             ApplicationUser exsistingUserFoundByPhoneNumber = _userManager.Users.Where(u => u.PhoneNumber == request.PhoneNumber).FirstOrDefault();
             if (exsistingUserFoundByPhoneNumber != null)
-            {
-                response.Messages.Add("User with this Phone Number was registered before.");
-                return response;
-            }
+                throw new BusinessException(ErrorCodes.ExsitingPhoneNumber);
 
             ApplicationUser newUser = new ApplicationUser
             {
@@ -80,15 +67,12 @@ namespace GenericCore.Services
             var creationResult = await _userManager.CreateAsync(newUser, request.Password);
 
             if (!creationResult.Succeeded)
-            {
-                response.Messages = creationResult.Errors.Select(e => e.Description).ToList();
-                return response;
-            }
+                return new FailedAPIResponse(ErrorCodes.IdentityError, creationResult);
 
-            response.Result = GenerateAuthenticationResult(newUser);
-            response.HasErrors = false;
+            var response = _mapper.Map<RegistrationResponse>(newUser);
+            response.Token = GenerateAuthenticationResult(newUser);
 
-            return response;
+            return SuccessAPIResponseWrapper.Wrap(response);
         }
 
         private string GenerateAuthenticationResult(ApplicationUser user)

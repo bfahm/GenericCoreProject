@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using GenericCore.ViewModels;
+using GenericCore.ViewModels.Wrappers;
 
 namespace GenericCore.Controllers
 {
@@ -15,25 +16,25 @@ namespace GenericCore.Controllers
         [HttpGet]
         public object HttpStatusCodeHandler(int statusCode)
         {
-            APIResponse<string> response = new APIResponse<string>();
+            APIResponse response = new APIResponse();
 
-            response.Status = statusCode;
+            response.ErrorCode = statusCode;
 
             switch (statusCode)
             {
                 case 404:
-                    response.Messages.Add("The requested url could not be found");
+                    response.ErrorMessage = "The requested url could not be found";
                     break;
                 case 401:
-                    response.Messages.Add("You are not authorized. Please login or register to continue.");
+                    response.ErrorMessage = "You are not authorized. Please login or register to continue.";
                     break;
                 default:
-                    response.Status = 400;
-                    response.Messages.Add("That didn't work, please have another go.");
+                    response.ErrorCode = 400;
+                    response.ErrorMessage = "That didn't work, please have another go.";
                     break;
             }
+            
             return response;
-
         }
     }
 }

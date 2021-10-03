@@ -5,7 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using GenericCore.Services;
-using GenericCore.ViewModels.Account;
+using GenericCore.ViewModels.Requests.Account;
+using GenericCore.ViewModels.Wrappers;
 
 namespace GenericCore.Controllers
 {
@@ -21,29 +22,21 @@ namespace GenericCore.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register([FromBody] RegistrationRequestViewModel request)
+        public async Task<IActionResult> Register([FromBody] RegistrationRequest request)
         {
             var authResponse = await _accountService.RegisterAsync(request);
 
-            if (authResponse.HasErrors)
-            {
+            if (!authResponse.Status)
                 return BadRequest(authResponse);
-            }
 
             return Ok(authResponse);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login([FromBody] LoginRequestViewModel request)
+        public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
             var authResponse = await _accountService.LoginAsync(request);
-
-            if (authResponse.HasErrors)
-            {
-                return BadRequest(authResponse);
-            }
-
-            return Ok(authResponse);
+            return Ok(SuccessAPIResponseWrapper.Wrap(authResponse));
         }
     }
 }

@@ -19,39 +19,32 @@ using GenericCore.Models;
 using GenericCore.Services;
 using Microsoft.OpenApi.Models;
 using GenericCore.Persistance.DbContexts;
+using GenericCore.Core;
+using GenericCore.Persistance;
 
 namespace GenericCore
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             // Setting up app settings
             services.Configure<AppSettings>(Configuration);
             var appSettings = Configuration.Get<AppSettings>();
 
-            // Setup the connextion string to be used by AppDbContext
-            services.AddDbContextPool<AppDbContext>(options =>
-            {
-                options.UseSqlServer(appSettings.SQLServerConnectionString);
-            });
-
-            // Setup ASP Identity to use the database
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<AppDbContext>();
-
             // Required for API functionality
             services.AddControllers();
 
-            services.AddScoped<AccountService>();
+            // Register Different Components
+            services.AddPersistance(appSettings);
+            services.AddCore();
 
             // Add authentication middleware and set its parameters
             services.AddAuthentication(auth =>
@@ -72,9 +65,6 @@ namespace GenericCore
                         ValidateLifetime = true
                     };
                 });
-
-            // Register here any Repositories that will be used:
-            
 
             services.AddSwaggerGen(sw =>
             {
@@ -106,7 +96,6 @@ namespace GenericCore
             });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
