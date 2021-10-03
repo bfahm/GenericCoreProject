@@ -27,6 +27,10 @@ namespace GenericCore.Controllers
                 case 401:
                     response.Messages.Add("You are not authorized. Please login or register to continue.");
                     break;
+                default:
+                    response.Status = 400;
+                    response.Messages.Add("That didn't work, please have another go.");
+                    break;
             }
             return response;
 

@@ -108,19 +108,18 @@ namespace GenericCore
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            //if (env.IsDevelopment())
-            //{
-            //    app.UseDeveloperExceptionPage();
-            //}
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
 
             app.UseSwagger();
             app.UseSwaggerUI(option => option.SwaggerEndpoint("/swagger/v1/swagger.json", "GenericCoreAPI Documentations"));
 
-            app.UseStatusCodePagesWithReExecute("/Error/{0}");
-
             app.ConfigureExceptionHandler();
 
-            //Put usestaticfiles here
+            //Add UseStaticFiles() here
+            
             app.UseRouting();
 
             app.UseAuthentication();
