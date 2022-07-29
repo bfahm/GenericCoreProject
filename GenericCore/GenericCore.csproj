@@ -5,10 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="10.1.1" />
-    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.10" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.10">
@@ -24,7 +21,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Persistance\BaseRepository\" />
+    <ProjectReference Include="..\GenericCore.Core\GenericCore.Core.csproj" />
+    <ProjectReference Include="..\GenericCore.ViewModels\GenericCore.ViewModels.csproj" />
   </ItemGroup>
 
 

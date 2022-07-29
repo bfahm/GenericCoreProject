@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.10" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.10" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\GenericCore.Constants\GenericCore.Constants.csproj" />
+    <ProjectReference Include="..\GenericCore.Models\GenericCore.Models.csproj" />
+    <ProjectReference Include="..\GenericCore.Persistence\GenericCore.Persistence.csproj" />
+    <ProjectReference Include="..\GenericCore.ViewModels\GenericCore.ViewModels.csproj" />
+  </ItemGroup>
+
+</Project>
