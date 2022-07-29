@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace GenericCore.Persistance.BaseRepository
+namespace GenericCore.Persistence.BaseRepository
 {
     public interface IBaseRepository<T>
     {

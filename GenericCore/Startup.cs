@@ -1,7 +1,7 @@
 using GenericCore.Core;
 using GenericCore.Extensions;
 using GenericCore.Models;
-using GenericCore.Persistance;
+using GenericCore.Persistence;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

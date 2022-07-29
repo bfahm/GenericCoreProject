@@ -1,10 +1,10 @@
 ﻿using GenericCore.Models;
-using GenericCore.Persistance.DbContexts;
+using GenericCore.Persistence.DbContexts;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace GenericCore.Persistance
+namespace GenericCore.Persistence
 {
     public static class DependencyInjection
     {

@@ -1,9 +1,9 @@
-﻿using GenericCore.Persistance.DbContexts;
+﻿using GenericCore.Persistence.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace GenericCore.Persistance.BaseRepository
+namespace GenericCore.Persistence.BaseRepository
 {
     public class BaseRepository<T> : IBaseRepository<T> where T : class
     {
