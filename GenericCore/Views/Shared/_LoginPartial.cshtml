@@ -1,0 +1,26 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using GenericCore.Models
+@using System.Security.Claims
+
+@inject UserManager<ApplicationUser> UserManager
+
+<ul class="navbar-nav">
+
+@if (User.Identity.IsAuthenticated)
+{
+    var userEmail = User.FindFirstValue(ClaimTypes.Email);
+
+    <li class="nav-item">
+        <p id="manage" class="nav-link text-dark" title="Manage">Hello @userEmail!</p>
+    </li>
+    <li class="nav-item">
+        <a id="logout" type="submit" class="nav-link btn btn-link text-dark form-inline" href="~/User/Logout">Logout</a>
+    </li>
+}
+else
+{
+    <li class="nav-item">
+        <a class="nav-link text-dark" id="login" href="~/User/Login">Login</a>
+    </li>
+}
+</ul>

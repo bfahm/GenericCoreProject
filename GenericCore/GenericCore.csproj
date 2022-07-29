@@ -25,5 +25,9 @@
     <ProjectReference Include="..\GenericCore.ViewModels\GenericCore.ViewModels.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Logs\" />
+  </ItemGroup>
+
 
 </Project>

@@ -1,12 +1,12 @@
 ﻿using GenericCore.ViewModels.Wrappers;
 using Microsoft.AspNetCore.Mvc;
 
-namespace GenericCore.Controllers
+namespace GenericCore.Controllers.Apis
 {
     [ApiController]
     public class ErrorController : ControllerBase
     {
-        [Route("Error/{statusCode}")]
+        [Route("api/Error/{statusCode}")]
         [HttpGet]
         public object HttpStatusCodeHandler(int statusCode)
         {

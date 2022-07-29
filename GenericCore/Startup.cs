@@ -1,15 +1,20 @@
 using GenericCore.Core;
 using GenericCore.Extensions;
+using GenericCore.Helpers;
 using GenericCore.Models;
 using GenericCore.Persistence;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -31,7 +36,10 @@ namespace GenericCore
             var appSettings = Configuration.Get<AppSettings>();
 
             // Required for API functionality
-            services.AddControllers();
+            services.AddMvc();
+
+            // Required to switch between bearer and cookie authentication
+            services.AddSingleton<IAuthenticationSchemeProvider, RouteAuthenticationSchemeProvider>();
 
             // Register Different Components
             services.AddPersistance(appSettings);
@@ -56,7 +64,19 @@ namespace GenericCore
                         RequireExpirationTime = false,
                         ValidateLifetime = true
                     };
-                });
+                })
+                .AddCookie(options =>
+                {
+                    options.AccessDeniedPath = "/User/AccessDenied";
+                    options.ExpireTimeSpan = TimeSpan.FromHours(9);
+                    options.Cookie = new CookieBuilder()
+                    {
+                        Name = "cookie",
+                        SameSite = SameSiteMode.Strict,
+                    };
+
+                    options.LoginPath = "/User/Login";
+                }); ;
 
             services.AddSwaggerGen(sw =>
             {
@@ -100,7 +120,7 @@ namespace GenericCore
 
             app.ConfigureExceptionHandler();
 
-            //Add UseStaticFiles() here
+            app.UseStaticFiles();
 
             app.UseRouting();
 
@@ -110,6 +130,11 @@ namespace GenericCore
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+
+                endpoints.MapControllerRoute(
+                    name: "Default",
+                    pattern: "{controller=default}/{action=Index}/{id?}"
+                );
             });
         }
     }

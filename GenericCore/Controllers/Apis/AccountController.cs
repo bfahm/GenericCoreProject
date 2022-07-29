@@ -4,7 +4,7 @@ using GenericCore.ViewModels.Wrappers;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
-namespace GenericCore.Controllers
+namespace GenericCore.Controllers.Apis
 {
     [Route("api/[controller]/[action]")]
     [ApiController]

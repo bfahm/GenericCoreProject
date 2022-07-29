@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace GenericCore.Controllers
+namespace GenericCore.Controllers.Apis
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
